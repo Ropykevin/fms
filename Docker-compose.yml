@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  php-fpm:
+    build: .
+    container_name: farmapp-php
+    volumes:
+      - .:/var/www/html
+    networks:
+      - farmapp-network
+
+  nginx:
+    image: nginx:latest
+    container_name: farmapp-nginx
+    depends_on:
+      - php-fpm
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - farmapp-network
+
+  db:
+    image: mysql:8.0
+    container_name: farmapp-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: farmappdb
+      MYSQL_USER: farmappuser
+      MYSQL_PASSWORD: farmappsecret
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - farmapp-network
+
+volumes:
+  dbdata:
+
+networks:
+  farmapp-network:
+    driver: bridge
