@@ -2,10 +2,11 @@
 header('Content-Type: application/json');
 $response = ['success' => false, 'message' => ''];
 
-// Database connection
-// mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
-mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
+require_once 'mail_functions.php';
 
+// Database connection
+// $con = mysqli_connect("localhost", "root", "", "fms");
+$con = mysqli_connect("localhost", "root", "", "fms");
 if (!$con) {
     $response['message'] = "Database connection failed: " . mysqli_connect_error();
     echo json_encode($response);
@@ -46,8 +47,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               VALUES ('$animal_id', '$report_date', '$diagnosis', '$treatment', '$medicine', $cost)";
 
     if (mysqli_query($con, $query)) {
-        $response['success'] = true;
-        $response['message'] = "Medical report added successfully";
+        $record_id = mysqli_insert_id($con);
+
+        // Prepare report data for email
+        $reportData = [
+            'Record ID' => $record_id,
+            'Animal ID' => $animal_id,
+            'Report Date' => $report_date,
+            'Diagnosis' => $diagnosis,
+            'Treatment' => $treatment,
+            'Medicine' => $medicine,
+            'Cost' => $cost
+        ];
+
+        // Send email notification
+        if (sendReportNotification('Medical', $reportData)) {
+            $response['success'] = true;
+            $response['message'] = "Medical report added successfully and admin notified";
+        } else {
+            $response['success'] = true;
+            $response['message'] = "Medical report added successfully but admin notification failed";
+        }
     } else {
         $response['message'] = "Error adding medical report: " . mysqli_error($con);
     }

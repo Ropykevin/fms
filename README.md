@@ -45,6 +45,73 @@ A comprehensive web-based farm management system designed to streamline and auto
 - Employee and livestock counts
 - Report summaries
 
+### Report Generation and Mailing System
+
+The system includes an automated report generation and mailing system that can generate both weekly and monthly reports. These reports include:
+
+#### Weekly Reports
+- Feeding statistics (total reports, feed quantity)
+- Medical records (total reports, medical costs)
+- Produce data (total reports, produce quantity)
+
+#### Monthly Reports
+- Livestock overview (total livestock, species count)
+- Feeding statistics (total reports, feed quantity, animals fed)
+- Medical records (total reports, medical costs, animals treated)
+- Produce data (total reports, produce quantity, animals producing)
+
+#### Report Generation Process
+1. Reports can be generated from the admin dashboard
+2. Reports are automatically formatted in HTML
+3. Reports are sent via email to the admin email address
+4. The system uses PHPMailer for reliable email delivery
+
+#### Email Configuration
+The system uses PHPMailer with the following default settings:
+- SMTP Host: localhost
+- SMTP Port: 25
+- Authentication: Disabled (for local Mercury Mail Server)
+- TLS: Disabled (for local development)
+
+To configure email settings:
+1. Ensure Mercury Mail Server is running (for local development)
+2. Admin email is retrieved from the `contact` table where name = 'Admin'
+3. If no admin email is found, defaults to 'admin@farm.com'
+
+#### Error Handling and Logging
+- All report generation attempts are logged
+- Email sending status is tracked
+- Errors are logged to:
+  - `logs/error.log`
+  - `logs/php_errors.log`
+  - `C:\xampp\php\logs\php_error.log`
+
+#### Requirements
+- PHP 7.4 or higher
+- MySQL/MariaDB
+- PHPMailer (installed via Composer)
+- Mercury Mail Server (for local development)
+- XAMPP (recommended for local development)
+
+#### Installation
+1. Clone the repository
+2. Import the database schema from `fms.sql`
+3. Install dependencies:
+   ```bash
+   composer install
+   ```
+4. Configure your web server (Apache recommended)
+5. Ensure the `logs` directory is writable
+6. Start Mercury Mail Server (for local development)
+
+#### Troubleshooting
+If reports are not being sent:
+1. Check if Mercury Mail Server is running
+2. Verify admin email in the `contact` table
+3. Check error logs for specific issues
+4. Ensure PHP has permission to send mail
+5. Verify database connection settings
+
 ## 🛠️ Technical Stack
 
 - **Frontend**

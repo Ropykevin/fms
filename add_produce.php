@@ -2,8 +2,10 @@
 header('Content-Type: application/json');
 $response = ['success' => false, 'message' => ''];
 
+require_once 'mail_functions.php';
+
 // Database connection
-mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
+$con = mysqli_connect("localhost", "root", "", "fms");
 
 if (!$con) {
     $response['message'] = "Database connection failed: " . mysqli_connect_error();
@@ -41,8 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               VALUES ('$animal_id', '$report_date', '$produce_type', $quantity, '$remarks')";
 
     if (mysqli_query($con, $query)) {
-        $response['success'] = true;
-        $response['message'] = "Produce report added successfully";
+        $report_id = mysqli_insert_id($con);
+
+        // Prepare report data for email
+        $reportData = [
+            'Report ID' => $report_id,
+            'Animal ID' => $animal_id,
+            'Report Date' => $report_date,
+            'Produce Type' => $produce_type,
+            'Quantity' => $quantity,
+            'Remarks' => $remarks
+        ];
+
+        // Send email notification
+        if (sendReportNotification('Produce', $reportData)) {
+            $response['success'] = true;
+            $response['message'] = "Produce report added successfully and admin notified";
+        } else {
+            $response['success'] = true;
+            $response['message'] = "Produce report added successfully but admin notification failed";
+        }
     } else {
         $response['message'] = "Error adding produce report: " . mysqli_error($con);
     }

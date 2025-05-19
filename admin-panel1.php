@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
+$con = mysqli_connect("localhost", "root", "", "fms");
 
 include('newfunc.php');
 
@@ -267,6 +267,10 @@ if (isset($_POST['empsub1'])) {
           <a class="list-group-item list-group-item-action" id="queries-tab" data-bs-toggle="pill"
             href="#queries-content" role="tab" aria-controls="queries-content" aria-selected="false">
             <i class="fas fa-chart-bar me-2"></i>Queries
+          </a>
+          <a class="list-group-item list-group-item-action" id="reports-tab" data-bs-toggle="pill"
+            href="#reports-content" role="tab" aria-controls="reports-content" aria-selected="false">
+            <i class="fas fa-file-alt me-2"></i>Generate Reports
           </a>
         </div>
       </div>
@@ -857,7 +861,7 @@ if (isset($_POST['empsub1'])) {
                           <select class="form-select" name="empemail" id="empemail" required>
                             <option value="">-- Select Employee --</option>
                             <?php
-                            mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
+                            $con = mysqli_connect("localhost", "root", "", "fms");
                             $query = "SELECT email, username FROM emptb ORDER BY username";
                             $result = mysqli_query($con, $query);
                             while ($row = mysqli_fetch_array($result)) {
@@ -1053,6 +1057,13 @@ if (isset($_POST['empsub1'])) {
               </div>
             </div>
           </div>
+          <!-- Add this new tab content section before the closing div of tab-content -->
+          <div class="tab-pane fade" id="reports-content" role="tabpanel" aria-labelledby="reports-tab">
+            <div class="container-fluid p-0">
+              <h4 class="mb-4">Generate Reports</h4>
+              <?php include 'admin/reports_section.php'; ?>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1157,9 +1168,27 @@ if (isset($_POST['empsub1'])) {
     }
 
     function deleteLivestock(animalId) {
-      if (confirm('Are you sure you want to delete this livestock record?')) {
-        // Implement delete livestock
-        alert('Delete livestock: ' + animalId);
+      if (confirm('Are you sure you want to delete this livestock record? This will also delete all associated reports.')) {
+        const formData = new FormData();
+        formData.append('animal_id', animalId);
+
+        fetch('delete_livestock.php', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Livestock deleted successfully!');
+              location.reload();
+            } else {
+              alert('Error: ' + data.message);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the livestock record.');
+          });
       }
     }
 
@@ -1169,48 +1198,214 @@ if (isset($_POST['empsub1'])) {
     }
 
     function editFeeding(reportId) {
-      // Implement edit feeding report
-      alert('Edit feeding report: ' + reportId);
+      // Fetch the feeding report data
+      fetch('get_feeding.php?report_id=' + reportId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Populate the edit form with the feeding report data
+            document.getElementById('edit_report_id').value = data.feeding.report_id;
+            document.getElementById('edit_animal_id').value = data.feeding.animal_id;
+            document.getElementById('edit_feeding_date').value = data.feeding.feeding_date;
+            document.getElementById('edit_feed_type').value = data.feeding.feed_type;
+            document.getElementById('edit_quantity').value = data.feeding.quantity;
+            document.getElementById('edit_remarks').value = data.feeding.remarks;
+
+            // Show the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editFeedingModal'));
+            editModal.show();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while fetching the feeding report.');
+        });
     }
 
     function deleteFeeding(reportId) {
       if (confirm('Are you sure you want to delete this feeding report?')) {
-        // Implement delete feeding report
-        alert('Delete feeding report: ' + reportId);
+        const formData = new FormData();
+        formData.append('report_id', reportId);
+
+        fetch('delete_feeding.php', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Feeding report deleted successfully!');
+              location.reload();
+            } else {
+              alert('Error: ' + data.message);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the feeding report.');
+          });
       }
     }
 
     function viewMedical(recordId) {
-      // Implement view medical report
-      alert('View medical report: ' + recordId);
+      // Fetch the medical report data
+      fetch('get_medical.php?record_id=' + recordId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Populate the edit form with the medical report data
+            document.getElementById('edit_record_id').value = data.medical.record_id;
+            document.getElementById('edit_medical_animal_id').value = data.medical.animal_id;
+            document.getElementById('edit_report_date').value = data.medical.report_date;
+            document.getElementById('edit_diagnosis').value = data.medical.diagnosis;
+            document.getElementById('edit_treatment').value = data.medical.treatment;
+            document.getElementById('edit_medicine').value = data.medical.medicine;
+            document.getElementById('edit_cost').value = data.medical.cost;
+
+            // Show the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editMedicalModal'));
+            editModal.show();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while fetching the medical report.');
+        });
     }
 
     function editMedical(recordId) {
-      // Implement edit medical report
-      alert('Edit medical report: ' + recordId);
+      // Fetch the medical report data
+      fetch('get_medical.php?record_id=' + recordId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Populate the edit form with the medical report data
+            document.getElementById('edit_record_id').value = data.medical.record_id;
+            document.getElementById('edit_medical_animal_id').value = data.medical.animal_id;
+            document.getElementById('edit_report_date').value = data.medical.report_date;
+            document.getElementById('edit_diagnosis').value = data.medical.diagnosis;
+            document.getElementById('edit_treatment').value = data.medical.treatment;
+            document.getElementById('edit_medicine').value = data.medical.medicine;
+            document.getElementById('edit_cost').value = data.medical.cost;
+
+            // Show the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editMedicalModal'));
+            editModal.show();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while fetching the medical report.');
+        });
     }
 
     function deleteMedical(recordId) {
       if (confirm('Are you sure you want to delete this medical report?')) {
-        // Implement delete medical report
-        alert('Delete medical report: ' + recordId);
+        const formData = new FormData();
+        formData.append('record_id', recordId);
+
+        fetch('delete_medical.php', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Medical report deleted successfully!');
+              location.reload();
+            } else {
+              alert('Error: ' + data.message);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the medical report.');
+          });
       }
     }
 
     function viewProduce(reportId) {
-      // Implement view produce report
-      alert('View produce report: ' + reportId);
+      // Fetch the produce report data
+      fetch('get_produce.php?report_id=' + reportId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Populate the edit form with the produce report data
+            document.getElementById('edit_produce_report_id').value = data.produce.report_id;
+            document.getElementById('edit_produce_animal_id').value = data.produce.animal_id;
+            document.getElementById('edit_produce_date').value = data.produce.report_date;
+            document.getElementById('edit_produce_type').value = data.produce.produce_type;
+            document.getElementById('edit_produce_quantity').value = data.produce.quantity;
+            document.getElementById('edit_produce_remarks').value = data.produce.remarks;
+
+            // Show the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editProduceModal'));
+            editModal.show();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while fetching the produce report.');
+        });
     }
 
     function editProduce(reportId) {
-      // Implement edit produce report
-      alert('Edit produce report: ' + reportId);
+      // Fetch the produce report data
+      fetch('get_produce.php?report_id=' + reportId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Populate the edit form with the produce report data
+            document.getElementById('edit_produce_report_id').value = data.produce.report_id;
+            document.getElementById('edit_produce_animal_id').value = data.produce.animal_id;
+            document.getElementById('edit_produce_date').value = data.produce.report_date;
+            document.getElementById('edit_produce_type').value = data.produce.produce_type;
+            document.getElementById('edit_produce_quantity').value = data.produce.quantity;
+            document.getElementById('edit_produce_remarks').value = data.produce.remarks;
+
+            // Show the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editProduceModal'));
+            editModal.show();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while fetching the produce report.');
+        });
     }
 
     function deleteProduce(reportId) {
       if (confirm('Are you sure you want to delete this produce report?')) {
-        // Implement delete produce report
-        alert('Delete produce report: ' + reportId);
+        const formData = new FormData();
+        formData.append('report_id', reportId);
+
+        fetch('delete_produce.php', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Produce report deleted successfully!');
+              location.reload();
+            } else {
+              alert('Error: ' + data.message);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the produce report.');
+          });
       }
     }
   </script>
@@ -1470,6 +1665,253 @@ if (isset($_POST['empsub1'])) {
     </div>
   </div>
 
+  <!-- Add Edit Feeding Report Modal -->
+  <div class="modal fade" id="editFeedingModal" tabindex="-1" aria-labelledby="editFeedingModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editFeedingModalLabel">Edit Feeding Report</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editFeedingForm" method="post" action="edit_feeding.php">
+            <input type="hidden" name="report_id" id="edit_report_id">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Animal ID</label>
+                <select class="form-select" name="animal_id" id="edit_animal_id" required>
+                  <option value="">Select Animal</option>
+                  <?php
+                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
+                  $result = mysqli_query($con, $query);
+                  while ($row = mysqli_fetch_array($result)) {
+                    echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
+                      htmlspecialchars($row['animal_id']) . "</option>";
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Feeding Date</label>
+                <input type="date" class="form-control" name="feeding_date" id="edit_feeding_date" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Feed Type</label>
+                <select class="form-select" name="feed_type" id="edit_feed_type" required>
+                  <option value="">Select Feed Type</option>
+                  <option value="Hay">Hay</option>
+                  <option value="Grain">Grain</option>
+                  <option value="Silage">Silage</option>
+                  <option value="Concentrate">Concentrate</option>
+                  <option value="Mixed Feed">Mixed Feed</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Quantity (kg)</label>
+                <input type="number" step="0.01" class="form-control" name="quantity" id="edit_quantity" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label class="form-label">Remarks</label>
+                <textarea class="form-control" name="remarks" id="edit_remarks" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update Feeding Report</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Edit Medical Report Modal -->
+  <div class="modal fade" id="editMedicalModal" tabindex="-1" aria-labelledby="editMedicalModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editMedicalModalLabel">Edit Medical Report</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editMedicalForm" method="post" action="edit_medical.php">
+            <input type="hidden" name="record_id" id="edit_record_id">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Animal ID</label>
+                <select class="form-select" name="animal_id" id="edit_medical_animal_id" required>
+                  <option value="">Select Animal</option>
+                  <?php
+                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
+                  $result = mysqli_query($con, $query);
+                  while ($row = mysqli_fetch_array($result)) {
+                    echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
+                      htmlspecialchars($row['animal_id']) . "</option>";
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Report Date</label>
+                <input type="date" class="form-control" name="report_date" id="edit_report_date" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label class="form-label">Diagnosis</label>
+                <textarea class="form-control" name="diagnosis" id="edit_diagnosis" rows="3" required></textarea>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label class="form-label">Treatment</label>
+                <textarea class="form-control" name="treatment" id="edit_treatment" rows="3" required></textarea>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Medicine</label>
+                <input type="text" class="form-control" name="medicine" id="edit_medicine" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Cost</label>
+                <input type="number" step="0.01" class="form-control" name="cost" id="edit_cost" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update Medical Report</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Edit Produce Report Modal -->
+  <div class="modal fade" id="editProduceModal" tabindex="-1" aria-labelledby="editProduceModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProduceModalLabel">Edit Produce Report</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editProduceForm" method="post" action="edit_produce.php">
+            <input type="hidden" name="report_id" id="edit_produce_report_id">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Animal ID</label>
+                <select class="form-select" name="animal_id" id="edit_produce_animal_id" required>
+                  <option value="">Select Animal</option>
+                  <?php
+                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
+                  $result = mysqli_query($con, $query);
+                  while ($row = mysqli_fetch_array($result)) {
+                    echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
+                      htmlspecialchars($row['animal_id']) . "</option>";
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Report Date</label>
+                <input type="date" class="form-control" name="report_date" id="edit_produce_date" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Produce Type</label>
+                <select class="form-select" name="produce_type" id="edit_produce_type" required>
+                  <option value="">Select Produce Type</option>
+                  <option value="Milk">Milk</option>
+                  <option value="Eggs">Eggs</option>
+                  <option value="Wool">Wool</option>
+                  <option value="Meat">Meat</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Quantity</label>
+                <input type="number" step="0.01" class="form-control" name="quantity" id="edit_produce_quantity"
+                  required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label class="form-label">Remarks</label>
+                <textarea class="form-control" name="remarks" id="edit_produce_remarks" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update Produce Report</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Edit Employee Modal -->
+  <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editEmployeeForm" method="post" action="edit_employee.php">
+            <input type="hidden" name="email" id="edit_email">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Employee Name</label>
+                <input type="text" class="form-control" name="username" id="edit_username" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email ID</label>
+                <input type="email" class="form-control" id="edit_email_display" disabled>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Phone</label>
+                <input type="tel" class="form-control" name="phone" id="edit_phone" pattern="[0-9]{10}" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Salary</label>
+                <input type="number" class="form-control" name="salary" id="edit_salary" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">New Password (leave blank to keep current)</label>
+                <input type="password" class="form-control" name="password" id="edit_password">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Confirm New Password</label>
+                <input type="password" class="form-control" name="confirm_password" id="edit_confirm_password">
+                <span id="edit_password_message" class="form-text"></span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update Employee</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Add this before the closing body tag -->
   <script>
     // ... existing JavaScript ...
@@ -1576,6 +2018,183 @@ if (isset($_POST['empsub1'])) {
           new bootstrap.Modal(modal);
         }
       });
+    });
+
+    // Add event listener for edit feeding form submission
+    document.getElementById('editFeedingForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+
+      fetch('edit_feeding.php', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Feeding report updated successfully!');
+            location.reload();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while updating the feeding report.');
+        });
+    });
+
+    // Add event listener for edit medical form submission
+    document.getElementById('editMedicalForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+
+      fetch('edit_medical.php', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Medical report updated successfully!');
+            location.reload();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while updating the medical report.');
+        });
+    });
+
+    // Add event listener for edit produce form submission
+    document.getElementById('editProduceForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+
+      fetch('edit_produce.php', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Produce report updated successfully!');
+            location.reload();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while updating the produce report.');
+        });
+    });
+
+    function editEmployee(email) {
+      // Fetch the employee data
+      fetch('get_employee.php?email=' + encodeURIComponent(email))
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Populate the edit form with the employee data
+            document.getElementById('edit_email').value = data.employee.email;
+            document.getElementById('edit_email_display').value = data.employee.email;
+            document.getElementById('edit_username').value = data.employee.username;
+            document.getElementById('edit_phone').value = data.employee.phone;
+            document.getElementById('edit_salary').value = data.employee.salary;
+
+            // Clear password fields
+            document.getElementById('edit_password').value = '';
+            document.getElementById('edit_confirm_password').value = '';
+            document.getElementById('edit_password_message').textContent = '';
+
+            // Show the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
+            editModal.show();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while fetching the employee data.');
+        });
+    }
+
+    // Add password validation for edit form
+    document.getElementById('edit_confirm_password').addEventListener('keyup', function () {
+      const password = document.getElementById('edit_password').value;
+      const confirmPassword = this.value;
+      const message = document.getElementById('edit_password_message');
+
+      if (password === '' && confirmPassword === '') {
+        message.textContent = '';
+        message.style.color = '';
+      } else if (password === confirmPassword) {
+        message.textContent = 'Passwords match';
+        message.style.color = 'green';
+      } else {
+        message.textContent = 'Passwords do not match';
+        message.style.color = 'red';
+      }
+    });
+
+    // Add event listener for edit employee form submission
+    document.getElementById('editEmployeeForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const password = document.getElementById('edit_password').value;
+      const confirmPassword = document.getElementById('edit_confirm_password').value;
+
+      if (password !== '' && password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      const formData = new FormData(this);
+
+      fetch('edit_employee.php', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Employee updated successfully!');
+            location.reload();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while updating the employee.');
+        });
+    });
+
+    // Update the employee list table to include edit button
+    document.addEventListener('DOMContentLoaded', function () {
+      const employeeTable = document.querySelector('#emp-content table tbody');
+      if (employeeTable) {
+        const rows = employeeTable.getElementsByTagName('tr');
+        for (let row of rows) {
+          const cells = row.getElementsByTagName('td');
+          if (cells.length >= 5) {
+            const email = cells[1].textContent;
+            const actionsCell = cells[4];
+            actionsCell.innerHTML = `
+              <button class='btn btn-sm btn-info me-1' onclick='viewEmployee("${email}")'>
+                <i class='fa fa-eye'></i>
+              </button>
+              <button class='btn btn-sm btn-warning me-1' onclick='editEmployee("${email}")'>
+                <i class='fa fa-edit'></i>
+              </button>
+            `;
+          }
+        }
+      }
     });
   </script>
 </body>
