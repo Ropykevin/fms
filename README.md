@@ -162,7 +162,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 👥 Authors
 
-- Your Name - Initial work
+- Ropy Kevin - Software  Developer
 
 ## 🙏 Acknowledgments
 
@@ -174,7 +174,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 For support, please contact:
-- Email: your.email@example.com
+- Email: ropykevin@gmail.com
 - Issue Tracker: GitHub Issues
 
 ---
