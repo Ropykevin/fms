@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-$con = mysqli_connect("localhost", "root", "", "fms");
+mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
 
 include('newfunc.php');
 
@@ -857,7 +857,7 @@ if (isset($_POST['empsub1'])) {
                           <select class="form-select" name="empemail" id="empemail" required>
                             <option value="">-- Select Employee --</option>
                             <?php
-                            $con = mysqli_connect("localhost", "root", "", "fms");
+                            mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
                             $query = "SELECT email, username FROM emptb ORDER BY username";
                             $result = mysqli_query($con, $query);
                             while ($row = mysqli_fetch_array($result)) {

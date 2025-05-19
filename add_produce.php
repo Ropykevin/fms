@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 $response = ['success' => false, 'message' => ''];
 
 // Database connection
-$con = mysqli_connect("localhost", "root", "", "fms");
+mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
 
 if (!$con) {
     $response['message'] = "Database connection failed: " . mysqli_connect_error();

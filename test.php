@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-$con = mysqli_connect("localhost", "root", "", "fms");
+mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
 
 include('newfunc.php');
 
@@ -304,7 +304,7 @@ if (isset($_POST['empsub1'])) {
                             </thead>
                             <tbody>
                                 <?php
-                                $con = mysqli_connect("localhost", "root", "", "fms");
+                                mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
                                 $query = "select * from emptb";
                                 $result = mysqli_query($con, $query);
                                 while ($row = mysqli_fetch_array($result)) {
@@ -353,7 +353,7 @@ if (isset($_POST['empsub1'])) {
                             </thead>
                             <tbody>
                                 <?php
-                                $con = mysqli_connect("localhost", "root", "", "fms");
+                                mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
                                 $query = "select * from userreg";
                                 $result = mysqli_query($con, $query);
                                 while ($row = mysqli_fetch_array($result)) {
@@ -399,7 +399,7 @@ if (isset($_POST['empsub1'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $con = mysqli_connect("localhost", "root", "", "fms");
+                                    mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
                                     $query = "select * from livestock";
                                     $result = mysqli_query($con, $query);
                                     while ($row = mysqli_fetch_array($result)) {
@@ -436,7 +436,7 @@ if (isset($_POST['empsub1'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $con = mysqli_connect("localhost", "root", "", "fms");
+                                    mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
                                     $query = "select * from feeding_report";
                                     $result = mysqli_query($con, $query);
                                     while ($row = mysqli_fetch_array($result)) {
@@ -473,7 +473,7 @@ if (isset($_POST['empsub1'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $con = mysqli_connect("localhost", "root", "", "fms");
+                                    mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
                                     $query = "select * from medical_report";
                                     $result = mysqli_query($con, $query);
                                     while ($row = mysqli_fetch_array($result)) {
@@ -510,7 +510,7 @@ if (isset($_POST['empsub1'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $con = mysqli_connect("localhost", "root", "", "fms");
+                                    mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
                                     $query = "select * from produce_report";
                                     $result = mysqli_query($con, $query);
                                     while ($row = mysqli_fetch_array($result)) {
@@ -592,7 +592,7 @@ if (isset($_POST['empsub1'])) {
                             </thead>
                             <tbody>
                                 <?php
-                                $con = mysqli_connect("localhost", "root", "", "fms");
+                                mysqli_connect('db', 'farmappuser', 'farmappsecret', 'farmappdb');
                                 $query = "select * from contact;";
                                 $result = mysqli_query($con, $query);
                                 while ($row = mysqli_fetch_array($result)) {
