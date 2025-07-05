@@ -1,36 +1,695 @@
-[2025-05-19 07:25:40] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"SERVER_NAME":"9a8b-102-68-76-201.ngrok-free.app","HTTP_HOST":"9a8b-102-68-76-201.ngrok-free.app"}
-[2025-05-19 07:26:49] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"SERVER_NAME":"9a8b-102-68-76-201.ngrok-free.app","HTTP_HOST":"9a8b-102-68-76-201.ngrok-free.app","DOCUMENT_ROOT":"C:\/xampp\/htdocs","SCRIPT_FILENAME":"C:\/xampp\/htdocs\/Farm-Management-System\/admin\/generate_reports.php","PHP_SELF":"\/Farm-Management-System\/admin\/generate_reports.php","REMOTE_ADDR":"::1"}
-[2025-05-19 07:26:49] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:26:49] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:26:57] === Starting report generation request === Context: {"REQUEST_METHOD":"GET","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":[],"SERVER_NAME":"9a8b-102-68-76-201.ngrok-free.app","HTTP_HOST":"9a8b-102-68-76-201.ngrok-free.app","DOCUMENT_ROOT":"C:\/xampp\/htdocs","SCRIPT_FILENAME":"C:\/xampp\/htdocs\/Farm-Management-System\/admin\/generate_reports.php","PHP_SELF":"\/Farm-Management-System\/admin\/generate_reports.php","REMOTE_ADDR":"::1"}
-[2025-05-19 07:26:57] Fatal error in generate_reports.php Context: {"error":"Invalid request method. Only POST requests are allowed.","trace":"#0 {main}","file":"C:\\xampp\\htdocs\\Farm-Management-System\\admin\\generate_reports.php","line":73}
-[2025-05-19 07:27:38] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[],"REQUEST_DATA":{"action":"weekly"},"SERVER_NAME":"9a8b-102-68-76-201.ngrok-free.app","HTTP_HOST":"9a8b-102-68-76-201.ngrok-free.app","DOCUMENT_ROOT":"C:\/xampp\/htdocs","SCRIPT_FILENAME":"C:\/xampp\/htdocs\/Farm-Management-System\/admin\/generate_reports.php","PHP_SELF":"\/Farm-Management-System\/admin\/generate_reports.php","REMOTE_ADDR":"::1","HTTP_USER_AGENT":"Mozilla\/5.0 (Linux; Android 13; SM-G981B) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/136.0.0.0 Mobile Safari\/537.36 Edg\/136.0.0.0","HTTP_REFERER":"https:\/\/9a8b-102-68-76-201.ngrok-free.app\/Farm-Management-System\/admin-panel1.php","REQUEST_SCHEME":"http","SERVER_PROTOCOL":"HTTP\/1.1","HTTP_X_FORWARDED_PROTO":"https","HTTP_X_FORWARDED_FOR":"102.68.76.201"}
-[2025-05-19 07:27:38] Using request data Context: {"method":"POST","data":{"action":"weekly"},"content_type":"application\/x-www-form-urlencoded","raw_input":"action=weekly"}
-[2025-05-19 07:27:38] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:27:38] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:27:55] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[],"REQUEST_DATA":{"action":"weekly"},"SERVER_NAME":"9a8b-102-68-76-201.ngrok-free.app","HTTP_HOST":"9a8b-102-68-76-201.ngrok-free.app","DOCUMENT_ROOT":"C:\/xampp\/htdocs","SCRIPT_FILENAME":"C:\/xampp\/htdocs\/Farm-Management-System\/admin\/generate_reports.php","PHP_SELF":"\/Farm-Management-System\/admin\/generate_reports.php","REMOTE_ADDR":"::1","HTTP_USER_AGENT":"Mozilla\/5.0 (Linux; Android 13; SM-G981B) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/136.0.0.0 Mobile Safari\/537.36 Edg\/136.0.0.0","HTTP_REFERER":"https:\/\/9a8b-102-68-76-201.ngrok-free.app\/Farm-Management-System\/admin-panel1.php","REQUEST_SCHEME":"http","SERVER_PROTOCOL":"HTTP\/1.1","HTTP_X_FORWARDED_PROTO":"https","HTTP_X_FORWARDED_FOR":"102.68.76.201"}
-[2025-05-19 07:27:55] Using request data Context: {"method":"POST","data":{"action":"weekly"},"content_type":"application\/x-www-form-urlencoded","raw_input":"action=weekly"}
-[2025-05-19 07:27:55] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:27:55] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:32:03] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[],"REQUEST_DATA":{"action":"weekly"},"SERVER_NAME":"9a8b-102-68-76-201.ngrok-free.app","HTTP_HOST":"9a8b-102-68-76-201.ngrok-free.app","DOCUMENT_ROOT":"C:\/xampp\/htdocs","SCRIPT_FILENAME":"C:\/xampp\/htdocs\/Farm-Management-System\/admin\/generate_reports.php","PHP_SELF":"\/Farm-Management-System\/admin\/generate_reports.php","REMOTE_ADDR":"::1","HTTP_USER_AGENT":"Mozilla\/5.0 (Linux; Android 13; SM-G981B) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/136.0.0.0 Mobile Safari\/537.36 Edg\/136.0.0.0","HTTP_REFERER":"https:\/\/9a8b-102-68-76-201.ngrok-free.app\/Farm-Management-System\/admin-panel1.php","REQUEST_SCHEME":"http","SERVER_PROTOCOL":"HTTP\/1.1","HTTP_X_FORWARDED_PROTO":"https","HTTP_X_FORWARDED_FOR":"102.68.76.201"}
-[2025-05-19 07:32:03] Using request data Context: {"method":"POST","data":{"action":"weekly"},"content_type":"application\/x-www-form-urlencoded","raw_input":"action=weekly"}
-[2025-05-19 07:32:03] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:32:03] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:33:24] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"monthly"},"GET_DATA":[]}
-[2025-05-19 07:33:24] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:33:24] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:33:54] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
-[2025-05-19 07:33:54] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:33:54] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:34:02] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
-[2025-05-19 07:34:02] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:34:02] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:34:10] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"monthly"},"GET_DATA":[]}
-[2025-05-19 07:34:10] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:34:10] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:35:05] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"monthly"},"GET_DATA":[]}
-[2025-05-19 07:35:05] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:35:05] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
-[2025-05-19 07:37:17] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
-[2025-05-19 07:37:17] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
-[2025-05-19 07:37:17] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+# Error log cleared for testing autoload path fix
+[2025-07-05 07:18:11] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:18:11] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:18:11] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:18:11] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:18:11] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:18:11] Starting weekly report generation
+[2025-07-05 07:18:11] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:18:11] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:18:11] Medical report results: Array
+(
+    [total_medical] => 1
+    [total_medical_cost] => 233445.00
+)
+
+[2025-07-05 07:18:11] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:18:11] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:18:11] === Starting report generation ===
+[2025-07-05 07:18:11] Report Type: Weekly
+[2025-07-05 07:18:11] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:18:11] Sending report to: admin@farm.com
+[2025-07-05 07:18:11] Initializing PHPMailer...
+[2025-07-05 07:18:11] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:18:11] Composer autoload file not found. Skipping email sending.
+[2025-07-05 07:21:32] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:21:32] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:21:32] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:21:32] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:21:32] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:21:32] Starting weekly report generation
+[2025-07-05 07:21:32] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:21:32] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:21:32] Medical report results: Array
+(
+    [total_medical] => 1
+    [total_medical_cost] => 233445.00
+)
+
+[2025-07-05 07:21:32] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:21:32] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:21:32] === Starting report generation ===
+[2025-07-05 07:21:32] Report Type: Weekly
+[2025-07-05 07:21:32] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:21:32] Sending report to: admin@farm.com
+[2025-07-05 07:21:32] Initializing PHPMailer...
+[2025-07-05 07:21:32] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:21:32] PHPMailer object created
+[2025-07-05 07:21:32] SMTP settings configured
+[2025-07-05 07:21:32] Recipients configured
+[2025-07-05 07:21:32] Email content prepared
+[2025-07-05 07:21:32] Attempting to send email...
+[2025-07-05 07:21:34] Email sending failed: SMTP Error: The following recipients failed: admin@farm.com: We do not relay non-local mail, sorry.
+
+[2025-07-05 07:21:34] Stack trace: #0 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1747): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Sat, 5 Ju...', '--b1=_HgBC5nn8L...')
+#1 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1564): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 C:\xampp\htdocs\Farm-Management-System\mail_functions.php(216): PHPMailer\PHPMailer\PHPMailer->send()
+#3 C:\xampp\htdocs\Farm-Management-System\admin\generate_reports.php(156): sendReportNotification('Weekly', Array)
+#4 {main}
+[2025-07-05 07:28:29] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"monthly"},"GET_DATA":[]}
+[2025-07-05 07:28:29] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:28:29] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:28:29] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:28:29] Processing report generation request Context: {"action":"monthly"}
+[2025-07-05 07:28:29] Starting monthly report generation
+[2025-07-05 07:28:29] Generating monthly report from 2025-06-05 to 2025-07-05
+[2025-07-05 07:28:29] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+    [animals_fed] => 1
+)
+
+[2025-07-05 07:28:29] Medical report results: Array
+(
+    [total_medical] => 1
+    [total_medical_cost] => 233445.00
+    [animals_treated] => 1
+)
+
+[2025-07-05 07:28:29] Produce report results: Array
+(
+    [total_produce] => 4
+    [total_produce_quantity] => 140.00
+    [animals_producing] => 1
+)
+
+[2025-07-05 07:28:29] Livestock results: Array
+(
+    [total_livestock] => 1
+    [species_count] => 1
+)
+
+[2025-07-05 07:28:29] Compiled monthly report data: Array
+(
+    [report_period] => Monthly Report (2025-06-05 to 2025-07-05)
+    [total_livestock] => 1
+    [species_count] => 1
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [animals_fed] => 1
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [animals_treated] => 1
+    [total_produce_reports] => 4
+    [total_produce_quantity] => 140.00 units
+    [animals_producing] => 1
+)
+
+[2025-07-05 07:28:29] === Starting report generation ===
+[2025-07-05 07:28:29] Report Type: Monthly
+[2025-07-05 07:28:29] Report Data: Array
+(
+    [report_period] => Monthly Report (2025-06-05 to 2025-07-05)
+    [total_livestock] => 1
+    [species_count] => 1
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [animals_fed] => 1
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [animals_treated] => 1
+    [total_produce_reports] => 4
+    [total_produce_quantity] => 140.00 units
+    [animals_producing] => 1
+)
+
+[2025-07-05 07:28:29] Sending report to: admin@farm.com
+[2025-07-05 07:28:29] Initializing PHPMailer...
+[2025-07-05 07:28:29] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:28:29] PHPMailer object created
+[2025-07-05 07:28:29] SMTP settings configured
+[2025-07-05 07:28:29] Recipients configured
+[2025-07-05 07:28:29] Email content prepared
+[2025-07-05 07:28:29] Attempting to send email...
+[2025-07-05 07:28:31] Email sending failed: SMTP Error: The following recipients failed: admin@farm.com: We do not relay non-local mail, sorry.
+
+[2025-07-05 07:28:31] Stack trace: #0 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1747): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Sat, 5 Ju...', '--b1=_z3vgvMk1j...')
+#1 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1564): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 C:\xampp\htdocs\Farm-Management-System\mail_functions.php(216): PHPMailer\PHPMailer\PHPMailer->send()
+#3 C:\xampp\htdocs\Farm-Management-System\admin\generate_reports.php(169): sendReportNotification('Monthly', Array)
+#4 {main}
+[2025-07-05 07:33:34] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:33:34] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:33:34] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:33:34] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:33:34] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:33:34] Starting weekly report generation
+[2025-07-05 07:33:34] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:33:34] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:33:34] Medical report results: Array
+(
+    [total_medical] => 1
+    [total_medical_cost] => 233445.00
+)
+
+[2025-07-05 07:33:34] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:33:34] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:33:34] === Starting report generation ===
+[2025-07-05 07:33:34] Report Type: Weekly
+[2025-07-05 07:33:34] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:33:34] Sending report to: admin@farm.com
+[2025-07-05 07:33:34] Initializing PHPMailer...
+[2025-07-05 07:33:34] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:33:34] PHPMailer object created
+[2025-07-05 07:33:34] SMTP settings configured
+[2025-07-05 07:33:34] Recipients configured
+[2025-07-05 07:33:34] Email content prepared
+[2025-07-05 07:33:34] Attempting to send email...
+[2025-07-05 07:33:36] Email sending failed: SMTP Error: The following recipients failed: admin@farm.com: We do not relay non-local mail, sorry.
+
+[2025-07-05 07:33:36] Stack trace: #0 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1747): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Sat, 5 Ju...', '--b1=_EcOf77R9t...')
+#1 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1564): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 C:\xampp\htdocs\Farm-Management-System\mail_functions.php(216): PHPMailer\PHPMailer\PHPMailer->send()
+#3 C:\xampp\htdocs\Farm-Management-System\admin\generate_reports.php(156): sendReportNotification('Weekly', Array)
+#4 {main}
+[2025-07-05 07:41:34] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:41:34] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:41:34] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:41:34] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:41:34] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:41:34] Starting weekly report generation
+[2025-07-05 07:41:34] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:41:34] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:41:34] Medical report results: Array
+(
+    [total_medical] => 2
+    [total_medical_cost] => 289000.00
+)
+
+[2025-07-05 07:41:34] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:41:34] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:41:34] === Starting report generation ===
+[2025-07-05 07:41:34] Report Type: Weekly
+[2025-07-05 07:41:34] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:41:34] Sending report to: admin@farm.com
+[2025-07-05 07:41:34] Initializing PHPMailer...
+[2025-07-05 07:41:34] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:41:34] PHPMailer object created
+[2025-07-05 07:41:34] SMTP settings configured
+[2025-07-05 07:41:34] Recipients configured
+[2025-07-05 07:41:34] Email content prepared
+[2025-07-05 07:41:34] Attempting to send email...
+[2025-07-05 07:41:36] Email sending failed: SMTP Error: The following recipients failed: admin@farm.com: We do not relay non-local mail, sorry.
+
+[2025-07-05 07:41:36] Stack trace: #0 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1747): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Sat, 5 Ju...', '--b1=_yWh1KQs0X...')
+#1 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1564): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 C:\xampp\htdocs\Farm-Management-System\mail_functions.php(216): PHPMailer\PHPMailer\PHPMailer->send()
+#3 C:\xampp\htdocs\Farm-Management-System\admin\generate_reports.php(156): sendReportNotification('Weekly', Array)
+#4 {main}
+[2025-07-05 07:43:39] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:43:39] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:43:39] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:43:39] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:43:39] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:43:39] Starting weekly report generation
+[2025-07-05 07:43:39] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:43:39] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:43:39] Medical report results: Array
+(
+    [total_medical] => 2
+    [total_medical_cost] => 289000.00
+)
+
+[2025-07-05 07:43:39] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:43:39] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:43:39] === Starting report generation ===
+[2025-07-05 07:43:39] Report Type: Weekly
+[2025-07-05 07:43:39] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:43:39] Sending report to: admin@farm.com
+[2025-07-05 07:43:39] Initializing PHPMailer...
+[2025-07-05 07:43:39] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:43:39] PHPMailer object created
+[2025-07-05 07:43:39] SMTP settings configured
+[2025-07-05 07:43:39] Recipients configured
+[2025-07-05 07:43:39] Email content prepared
+[2025-07-05 07:43:39] Attempting to send email...
+[2025-07-05 07:43:41] Email sending failed: SMTP Error: The following recipients failed: admin@farm.com: We do not relay non-local mail, sorry.
+
+[2025-07-05 07:43:41] Stack trace: #0 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1747): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Sat, 5 Ju...', '--b1=_2iL3aSfXb...')
+#1 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1564): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 C:\xampp\htdocs\Farm-Management-System\mail_functions.php(216): PHPMailer\PHPMailer\PHPMailer->send()
+#3 C:\xampp\htdocs\Farm-Management-System\admin\generate_reports.php(156): sendReportNotification('Weekly', Array)
+#4 {main}
+[2025-07-05 07:45:24] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:45:24] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:45:24] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:45:24] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:45:24] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:45:24] Starting weekly report generation
+[2025-07-05 07:45:24] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:45:24] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:45:24] Medical report results: Array
+(
+    [total_medical] => 2
+    [total_medical_cost] => 289000.00
+)
+
+[2025-07-05 07:45:24] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:45:24] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:45:24] === Starting report generation ===
+[2025-07-05 07:45:24] Report Type: Weekly
+[2025-07-05 07:45:24] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:45:24] Sending report to: ropykevin@gmail.com
+[2025-07-05 07:45:24] Initializing PHPMailer...
+[2025-07-05 07:45:24] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:45:24] PHPMailer object created
+[2025-07-05 07:45:24] SMTP settings configured
+[2025-07-05 07:45:24] Recipients configured
+[2025-07-05 07:45:24] Email content prepared
+[2025-07-05 07:45:24] Attempting to send email...
+[2025-07-05 07:45:26] Email sending failed: SMTP Error: The following recipients failed: ropykevin@gmail.com: We do not relay non-local mail, sorry.
+
+[2025-07-05 07:45:26] Stack trace: #0 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1747): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Sat, 5 Ju...', '--b1=_PbO7rOkMC...')
+#1 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1564): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 C:\xampp\htdocs\Farm-Management-System\mail_functions.php(216): PHPMailer\PHPMailer\PHPMailer->send()
+#3 C:\xampp\htdocs\Farm-Management-System\admin\generate_reports.php(156): sendReportNotification('Weekly', Array)
+#4 {main}
+[2025-07-05 07:47:07] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:47:07] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:47:07] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:47:07] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:47:07] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:47:07] Starting weekly report generation
+[2025-07-05 07:47:07] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:47:07] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:47:07] Medical report results: Array
+(
+    [total_medical] => 2
+    [total_medical_cost] => 289000.00
+)
+
+[2025-07-05 07:47:07] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:47:07] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:47:07] === Starting report generation ===
+[2025-07-05 07:47:07] Report Type: Weekly
+[2025-07-05 07:47:07] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:47:07] Sending report to: ropykevin@gmail.com
+[2025-07-05 07:47:07] Initializing PHPMailer...
+[2025-07-05 07:47:07] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:47:07] PHPMailer object created
+[2025-07-05 07:47:07] SMTP settings configured
+[2025-07-05 07:47:07] Recipients configured
+[2025-07-05 07:47:07] Email content prepared
+[2025-07-05 07:47:07] Attempting to send email...
+[2025-07-05 07:47:09] Email sending failed: SMTP Error: The following recipients failed: ropykevin@gmail.com: We do not relay non-local mail, sorry.
+
+[2025-07-05 07:47:09] Stack trace: #0 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1747): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Sat, 5 Ju...', '--b1=_1rlj7T8rk...')
+#1 C:\xampp\htdocs\Farm-Management-System\vendor\phpmailer\phpmailer\src\PHPMailer.php(1564): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 C:\xampp\htdocs\Farm-Management-System\mail_functions.php(216): PHPMailer\PHPMailer\PHPMailer->send()
+#3 C:\xampp\htdocs\Farm-Management-System\admin\generate_reports.php(156): sendReportNotification('Weekly', Array)
+#4 {main}
+[2025-07-05 07:54:04] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:54:04] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:54:04] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:54:04] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:54:04] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:54:04] Starting weekly report generation
+[2025-07-05 07:54:04] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:54:04] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:54:04] Medical report results: Array
+(
+    [total_medical] => 2
+    [total_medical_cost] => 289000.00
+)
+
+[2025-07-05 07:54:04] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:54:04] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:54:04] === Starting report generation ===
+[2025-07-05 07:54:04] Report Type: Weekly
+[2025-07-05 07:54:04] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:54:04] Sending report to: ropykevin@gmail.com
+[2025-07-05 07:54:04] Initializing PHPMailer...
+[2025-07-05 07:54:04] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:54:04] PHPMailer object created
+[2025-07-05 07:54:04] SMTP settings configured
+[2025-07-05 07:54:04] Recipients configured
+[2025-07-05 07:54:04] Email content prepared
+[2025-07-05 07:54:04] Attempting to send email...
+[2025-07-05 07:54:07] Email sent successfully
+[2025-07-05 07:59:08] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 07:59:08] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 07:59:08] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 07:59:08] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 07:59:08] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 07:59:08] Starting weekly report generation
+[2025-07-05 07:59:08] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 07:59:08] Feeding report results: Array
+(
+    [total_feeding] => 1
+    [total_feed_quantity] => 10.00
+)
+
+[2025-07-05 07:59:08] Medical report results: Array
+(
+    [total_medical] => 2
+    [total_medical_cost] => 289000.00
+)
+
+[2025-07-05 07:59:08] Produce report results: Array
+(
+    [total_produce] => 2
+    [total_produce_quantity] => 20.00
+)
+
+[2025-07-05 07:59:08] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:59:08] === Starting report generation ===
+[2025-07-05 07:59:08] Report Type: Weekly
+[2025-07-05 07:59:08] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 1
+    [total_feed_quantity] => 10.00 kg
+    [total_medical_reports] => 2
+    [total_medical_cost] => 289,000.00
+    [total_produce_reports] => 2
+    [total_produce_quantity] => 20.00 units
+)
+
+[2025-07-05 07:59:08] Sending report to: ropykevin@gmail.com
+[2025-07-05 07:59:08] Initializing PHPMailer...
+[2025-07-05 07:59:08] PHPMailer class not found. Checking autoload...
+[2025-07-05 07:59:08] PHPMailer object created
+[2025-07-05 07:59:08] SMTP settings configured
+[2025-07-05 07:59:08] Recipients configured
+[2025-07-05 07:59:08] Email content prepared
+[2025-07-05 07:59:08] Attempting to send email...
+[2025-07-05 07:59:12] Email sent successfully
+[2025-07-05 08:38:25] === Starting report generation request === Context: {"REQUEST_METHOD":"POST","REQUEST_URI":"\/Farm-Management-System\/admin\/generate_reports.php","POST_DATA":{"action":"weekly"},"GET_DATA":[]}
+[2025-07-05 08:38:25] Including required file Context: {"file":"..\/includes\/db_connection.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\includes\\db_connection.php"}
+[2025-07-05 08:38:25] Including required file Context: {"file":"..\/mail_functions.php","full_path":"C:\\xampp\\htdocs\\Farm-Management-System\\mail_functions.php"}
+[2025-07-05 08:38:25] Database connection successful Context: {"server_info":"10.4.32-MariaDB","host_info":"localhost via TCP\/IP"}
+[2025-07-05 08:38:25] Processing report generation request Context: {"action":"weekly"}
+[2025-07-05 08:38:25] Starting weekly report generation
+[2025-07-05 08:38:25] Generating weekly report from 2025-06-28 to 2025-07-05
+[2025-07-05 08:38:25] Feeding report results: Array
+(
+    [total_feeding] => 3
+    [total_feed_quantity] => 250.00
+)
+
+[2025-07-05 08:38:25] Medical report results: Array
+(
+    [total_medical] => 1
+    [total_medical_cost] => 233445.00
+)
+
+[2025-07-05 08:38:25] Produce report results: Array
+(
+    [total_produce] => 1
+    [total_produce_quantity] => 79.00
+)
+
+[2025-07-05 08:38:25] Compiled weekly report data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 3
+    [total_feed_quantity] => 250.00 kg
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [total_produce_reports] => 1
+    [total_produce_quantity] => 79.00 units
+)
+
+[2025-07-05 08:38:25] === Starting report generation ===
+[2025-07-05 08:38:25] Report Type: Weekly
+[2025-07-05 08:38:25] Report Data: Array
+(
+    [report_period] => Weekly Report (2025-06-28 to 2025-07-05)
+    [total_feeding_reports] => 3
+    [total_feed_quantity] => 250.00 kg
+    [total_medical_reports] => 1
+    [total_medical_cost] => 233,445.00
+    [total_produce_reports] => 1
+    [total_produce_quantity] => 79.00 units
+)
+
+[2025-07-05 08:38:25] Sending report to: ropykevin@gmail.com
+[2025-07-05 08:38:25] Initializing PHPMailer...
+[2025-07-05 08:38:25] PHPMailer class not found. Checking autoload...
+[2025-07-05 08:38:25] PHPMailer object created
+[2025-07-05 08:38:25] SMTP settings configured
+[2025-07-05 08:38:25] Recipients configured
+[2025-07-05 08:38:25] Email content prepared
+[2025-07-05 08:38:25] Attempting to send email...
+[2025-07-05 08:38:28] Email sent successfully

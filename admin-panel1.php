@@ -4,6 +4,93 @@ $con = mysqli_connect("localhost", "root", "", "fms");
 
 include('newfunc.php');
 
+// Livestock Entry Processing
+if (isset($_POST['livestock_sub'])) {
+    $animal_id = mysqli_real_escape_string($con, $_POST['animal_id']);
+    $species   = mysqli_real_escape_string($con, $_POST['species']);
+    $breed     = mysqli_real_escape_string($con, $_POST['breed']);
+    $gender    = mysqli_real_escape_string($con, $_POST['gender']);
+    $dob       = $_POST['dob'];
+    $weight    = $_POST['weight'];
+    $ear_tag   = mysqli_real_escape_string($con, $_POST['ear_tag']);
+    $notes     = mysqli_real_escape_string($con, $_POST['notes']);
+    
+    // Always auto-generate animal_id
+    $timestamp = time();
+    $animal_id = strtoupper(substr($species, 0, 3)) . $timestamp;
+    
+    // Auto-generate ear_tag if empty - starts with "LIV" followed by animal_id
+    if (empty($ear_tag)) {
+        $ear_tag = "LIV" . $animal_id;
+    }
+    
+    // Validate weight is positive
+    if ($weight > 0) {
+        $query = "INSERT INTO livestock (animal_id, species, breed, gender, date_of_birth, weight, ear_tag, notes) 
+                  VALUES ('$animal_id', '$species', '$breed', '$gender', '$dob', '$weight', '$ear_tag', '$notes')";
+        if (mysqli_query($con, $query)) {
+            echo "<script>alert('Livestock added successfully! Animal ID: $animal_id, Ear Tag: $ear_tag');</script>";
+        } else {
+            echo "<script>alert('Error adding livestock: " . mysqli_error($con) . "');</script>";
+        }
+    } else {
+        echo "<script>alert('Weight must be positive.');</script>";
+    }
+}
+
+// Process Edit Livestock
+if (isset($_POST['edit_livestock'])) {
+    $animal_id = mysqli_real_escape_string($con, $_POST['animal_id']);
+    $species = mysqli_real_escape_string($con, $_POST['species']);
+    $breed = mysqli_real_escape_string($con, $_POST['breed']);
+    $gender = mysqli_real_escape_string($con, $_POST['gender']);
+    $dob = mysqli_real_escape_string($con, $_POST['dob']);
+    $weight = mysqli_real_escape_string($con, $_POST['weight']);
+    $ear_tag = mysqli_real_escape_string($con, $_POST['ear_tag']);
+    $notes = mysqli_real_escape_string($con, $_POST['notes']);
+
+    // Validate weight is positive
+    if ($weight > 0) {
+        $query = "UPDATE livestock SET species='$species', breed='$breed', gender='$gender', date_of_birth='$dob', weight='$weight', ear_tag='$ear_tag', notes='$notes' WHERE animal_id='$animal_id'";
+        if (mysqli_query($con, $query)) {
+            echo "<script>alert('Livestock updated successfully!'); window.location.reload();</script>";
+        } else {
+            echo "<script>alert('Error updating livestock: " . mysqli_error($con) . "');</script>";
+        }
+    } else {
+        echo "<script>alert('Weight must be positive.');</script>";
+    }
+}
+
+// Process Delete Livestock
+if (isset($_POST['delete_livestock'])) {
+    $animal_id = mysqli_real_escape_string($con, $_POST['animal_id']);
+    
+    // Check if livestock has related records
+    $check_query = "SELECT COUNT(*) as count FROM feeding_report WHERE animal_id='$animal_id'";
+    $check_result = mysqli_query($con, $check_query);
+    $feeding_count = mysqli_fetch_assoc($check_result)['count'];
+    
+    $check_query = "SELECT COUNT(*) as count FROM medical_report WHERE animal_id='$animal_id'";
+    $check_result = mysqli_query($con, $check_query);
+    $medical_count = mysqli_fetch_assoc($check_result)['count'];
+    
+    $check_query = "SELECT COUNT(*) as count FROM produce_report WHERE animal_id='$animal_id'";
+    $check_result = mysqli_query($con, $check_query);
+    $produce_count = mysqli_fetch_assoc($check_result)['count'];
+    
+    if ($feeding_count > 0 || $medical_count > 0 || $produce_count > 0) {
+        echo "<script>alert('Cannot delete livestock. It has related records in feeding, medical, or produce reports.');</script>";
+    } else {
+        $query = "DELETE FROM livestock WHERE animal_id='$animal_id'";
+        if (mysqli_query($con, $query)) {
+            echo "<script>alert('Livestock deleted successfully!'); window.location.reload();</script>";
+        } else {
+            echo "<script>alert('Error deleting livestock: " . mysqli_error($con) . "');</script>";
+        }
+    }
+}
+
 if (isset($_POST['empsub'])) {
   $emp = $_POST['emp'];
   $emppassword = $_POST['emppassword'];
@@ -236,10 +323,10 @@ if (isset($_POST['empsub1'])) {
             role="tab" aria-controls="emp-content" aria-selected="false">
             <i class="fas fa-users me-2"></i>Employee List
           </a>
-          <a class="list-group-item list-group-item-action" id="user-tab" data-bs-toggle="pill" href="#user-content"
+          <!-- <a class="list-group-item list-group-item-action" id="user-tab" data-bs-toggle="pill" href="#user-content"
             role="tab" aria-controls="user-content" aria-selected="false">
             <i class="fas fa-user me-2"></i>User List
-          </a>
+          </a> -->
           <a class="list-group-item list-group-item-action" id="livestock-tab" data-bs-toggle="pill"
             href="#livestock-content" role="tab" aria-controls="livestock-content" aria-selected="false">
             <i class="fas fa-cow me-2"></i>Livestock List
@@ -323,7 +410,7 @@ if (isset($_POST['empsub1'])) {
               <!-- Existing dashboard cards with improved styling -->
               <div class="container-fluid container-fullw bg-white">
                 <div class="row">
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <div class="panel panel-white no-radius text-center">
                       <div class="panel-body">
                         <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i
@@ -338,7 +425,7 @@ if (isset($_POST['empsub1'])) {
                     </div>
                   </div>
 
-                  <div class="col-sm-4" style="left: -3%">
+                  <!-- <div class="col-sm-4" style="left: -3%">
                     <div class="panel panel-white no-radius text-center">
                       <div class="panel-body">
                         <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i
@@ -352,9 +439,9 @@ if (isset($_POST['empsub1'])) {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <div class="panel panel-white no-radius text-center">
                       <div class="panel-body">
                         <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i
@@ -1158,37 +1245,82 @@ if (isset($_POST['empsub1'])) {
     }
 
     function viewLivestock(animalId) {
-      // Implement view livestock details
-      alert('View livestock: ' + animalId);
+      // Fetch livestock data and populate view modal
+      fetch('get_livestock.php?animal_id=' + animalId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Populate the view modal with livestock data
+            document.getElementById('view_animal_id').textContent = data.livestock.animal_id;
+            document.getElementById('view_species').textContent = data.livestock.species;
+            document.getElementById('view_breed').textContent = data.livestock.breed;
+            document.getElementById('view_gender').textContent = data.livestock.gender;
+            document.getElementById('view_dob').textContent = data.livestock.date_of_birth;
+            document.getElementById('view_weight').textContent = data.livestock.weight + ' kg';
+            document.getElementById('view_ear_tag').textContent = data.livestock.ear_tag;
+            document.getElementById('view_notes').textContent = data.livestock.notes || 'No notes';
+
+            // Show the view modal
+            const viewModal = new bootstrap.Modal(document.getElementById('viewLivestockModal'));
+            viewModal.show();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while fetching the livestock details.');
+        });
     }
 
     function editLivestock(animalId) {
-      // Implement edit livestock
-      alert('Edit livestock: ' + animalId);
+      // Fetch livestock data and populate edit modal
+      fetch('get_livestock.php?animal_id=' + animalId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Populate the edit form with livestock data
+            document.getElementById('edit_livestock_animal_id').value = data.livestock.animal_id;
+            document.getElementById('edit_livestock_species').value = data.livestock.species;
+            document.getElementById('edit_livestock_breed').value = data.livestock.breed;
+            document.getElementById('edit_livestock_gender').value = data.livestock.gender;
+            document.getElementById('edit_livestock_dob').value = data.livestock.date_of_birth;
+            document.getElementById('edit_livestock_weight').value = data.livestock.weight;
+            document.getElementById('edit_livestock_ear_tag').value = data.livestock.ear_tag;
+            document.getElementById('edit_livestock_notes').value = data.livestock.notes || '';
+
+            // Show the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editLivestockModal'));
+            editModal.show();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while fetching the livestock details.');
+        });
     }
 
     function deleteLivestock(animalId) {
-      if (confirm('Are you sure you want to delete this livestock record? This will also delete all associated reports.')) {
+      if (confirm('Are you sure you want to delete this livestock record? This action cannot be undone.')) {
         const formData = new FormData();
+        formData.append('delete_livestock', '1');
         formData.append('animal_id', animalId);
 
-        fetch('delete_livestock.php', {
+        fetch(window.location.href, {
           method: 'POST',
           body: formData
         })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert('Livestock deleted successfully!');
-              location.reload();
-            } else {
-              alert('Error: ' + data.message);
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while deleting the livestock record.');
-          });
+        .then(response => response.text())
+        .then(data => {
+          // Reload the page to show updated data
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while deleting the livestock record.');
+        });
       }
     }
 
@@ -1420,12 +1552,9 @@ if (isset($_POST['empsub1'])) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="addLivestockForm" method="post" action="add_livestock.php">
+          <form id="addLivestockForm" method="post" action="">
+            <input type="hidden" name="animal_id" id="admin_animal_id">
             <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="form-label">Animal ID</label>
-                <input type="text" class="form-control" name="animal_id" required>
-              </div>
               <div class="col-md-6">
                 <label class="form-label">Species</label>
                 <select class="form-select" name="species" required>
@@ -1435,14 +1564,17 @@ if (isset($_POST['empsub1'])) {
                   <option value="Sheep">Sheep</option>
                   <option value="Pig">Pig</option>
                   <option value="Chicken">Chicken</option>
+                  <option value="Duck">Duck</option>
+                  <option value="Turkey">Turkey</option>
+                  <option value="Other">Other</option>
                 </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Breed</label>
+                <input type="text" class="form-control" name="breed" placeholder="e.g., Holstein, Nubian, etc." required>
               </div>
             </div>
             <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="form-label">Breed</label>
-                <input type="text" class="form-control" name="breed" required>
-              </div>
               <div class="col-md-6">
                 <label class="form-label">Gender</label>
                 <select class="form-select" name="gender" required>
@@ -1451,21 +1583,25 @@ if (isset($_POST['empsub1'])) {
                   <option value="Female">Female</option>
                 </select>
               </div>
-            </div>
-            <div class="row mb-3">
               <div class="col-md-6">
                 <label class="form-label">Date of Birth</label>
-                <input type="date" class="form-control" name="date_of_birth" required>
+                <input type="date" class="form-control" name="dob" required>
               </div>
+            </div>
+            <div class="row mb-3">
               <div class="col-md-6">
                 <label class="form-label">Weight (kg)</label>
                 <input type="number" step="0.01" class="form-control" name="weight" required>
               </div>
-            </div>
-            <div class="row mb-3">
               <div class="col-md-6">
                 <label class="form-label">Ear Tag</label>
-                <input type="text" class="form-control" name="ear_tag" required>
+                <input type="text" class="form-control" name="ear_tag" placeholder="Leave empty for auto-generation" id="admin_ear_tag">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label class="form-label">Notes</label>
+                <input type="text" class="form-control" name="notes" placeholder="Optional notes">
               </div>
             </div>
             <div class="modal-footer">
@@ -1490,15 +1626,15 @@ if (isset($_POST['empsub1'])) {
           <form id="addMedicalForm" method="post" action="add_medical.php">
             <div class="row mb-3">
               <div class="col-md-6">
-                <label class="form-label">Animal ID</label>
+                <label class="form-label">Animal</label>
                 <select class="form-select" name="animal_id" required>
                   <option value="">Select Animal</option>
                   <?php
-                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
+                  $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
                   $result = mysqli_query($con, $query);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
-                      htmlspecialchars($row['animal_id']) . "</option>";
+                      htmlspecialchars($row['species']) . " - " . htmlspecialchars($row['breed']) . " (ID: " . htmlspecialchars($row['animal_id']) . ", Tag: " . htmlspecialchars($row['ear_tag']) . ")</option>";
                   }
                   ?>
                 </select>
@@ -1552,15 +1688,15 @@ if (isset($_POST['empsub1'])) {
           <form id="addProduceForm" method="post" action="add_produce.php">
             <div class="row mb-3">
               <div class="col-md-6">
-                <label class="form-label">Animal ID</label>
+                <label class="form-label">Animal</label>
                 <select class="form-select" name="animal_id" required>
                   <option value="">Select Animal</option>
                   <?php
-                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
+                  $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
                   $result = mysqli_query($con, $query);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
-                      htmlspecialchars($row['animal_id']) . "</option>";
+                      htmlspecialchars($row['species']) . " - " . htmlspecialchars($row['breed']) . " (ID: " . htmlspecialchars($row['animal_id']) . ", Tag: " . htmlspecialchars($row['ear_tag']) . ")</option>";
                   }
                   ?>
                 </select>
@@ -1612,21 +1748,21 @@ if (isset($_POST['empsub1'])) {
         </div>
         <div class="modal-body">
           <form id="addFeedingForm" method="post" action="add_feeding.php">
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="form-label">Animal ID</label>
-                <select class="form-select" name="animal_id" required>
-                  <option value="">Select Animal</option>
-                  <?php
-                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
-                  $result = mysqli_query($con, $query);
-                  while ($row = mysqli_fetch_array($result)) {
-                    echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
-                      htmlspecialchars($row['animal_id']) . "</option>";
-                  }
-                  ?>
-                </select>
-              </div>
+                          <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="form-label">Animal</label>
+                  <select class="form-select" name="animal_id" required>
+                    <option value="">Select Animal</option>
+                    <?php
+                    $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
+                    $result = mysqli_query($con, $query);
+                    while ($row = mysqli_fetch_array($result)) {
+                      echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
+                        htmlspecialchars($row['species']) . " - " . htmlspecialchars($row['breed']) . " (ID: " . htmlspecialchars($row['animal_id']) . ", Tag: " . htmlspecialchars($row['ear_tag']) . ")</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
               <div class="col-md-6">
                 <label class="form-label">Feeding Date</label>
                 <input type="date" class="form-control" name="feeding_date" required>
@@ -1679,15 +1815,15 @@ if (isset($_POST['empsub1'])) {
             <input type="hidden" name="report_id" id="edit_report_id">
             <div class="row mb-3">
               <div class="col-md-6">
-                <label class="form-label">Animal ID</label>
+                <label class="form-label">Animal</label>
                 <select class="form-select" name="animal_id" id="edit_animal_id" required>
                   <option value="">Select Animal</option>
                   <?php
-                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
+                  $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
                   $result = mysqli_query($con, $query);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
-                      htmlspecialchars($row['animal_id']) . "</option>";
+                      htmlspecialchars($row['species']) . " - " . htmlspecialchars($row['breed']) . " (ID: " . htmlspecialchars($row['animal_id']) . ", Tag: " . htmlspecialchars($row['ear_tag']) . ")</option>";
                   }
                   ?>
                 </select>
@@ -1744,15 +1880,15 @@ if (isset($_POST['empsub1'])) {
             <input type="hidden" name="record_id" id="edit_record_id">
             <div class="row mb-3">
               <div class="col-md-6">
-                <label class="form-label">Animal ID</label>
+                <label class="form-label">Animal</label>
                 <select class="form-select" name="animal_id" id="edit_medical_animal_id" required>
                   <option value="">Select Animal</option>
                   <?php
-                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
+                  $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
                   $result = mysqli_query($con, $query);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
-                      htmlspecialchars($row['animal_id']) . "</option>";
+                      htmlspecialchars($row['species']) . " - " . htmlspecialchars($row['breed']) . " (ID: " . htmlspecialchars($row['animal_id']) . ", Tag: " . htmlspecialchars($row['ear_tag']) . ")</option>";
                   }
                   ?>
                 </select>
@@ -1808,15 +1944,15 @@ if (isset($_POST['empsub1'])) {
             <input type="hidden" name="report_id" id="edit_produce_report_id">
             <div class="row mb-3">
               <div class="col-md-6">
-                <label class="form-label">Animal ID</label>
+                <label class="form-label">Animal</label>
                 <select class="form-select" name="animal_id" id="edit_produce_animal_id" required>
                   <option value="">Select Animal</option>
                   <?php
-                  $query = "SELECT animal_id FROM livestock ORDER BY animal_id";
+                  $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
                   $result = mysqli_query($con, $query);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<option value='" . htmlspecialchars($row['animal_id']) . "'>" .
-                      htmlspecialchars($row['animal_id']) . "</option>";
+                      htmlspecialchars($row['species']) . " - " . htmlspecialchars($row['breed']) . " (ID: " . htmlspecialchars($row['animal_id']) . ", Tag: " . htmlspecialchars($row['ear_tag']) . ")</option>";
                   }
                   ?>
                 </select>
@@ -1852,6 +1988,137 @@ if (isset($_POST['empsub1'])) {
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Update Produce Report</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Livestock Modal -->
+  <div class="modal fade" id="viewLivestockModal" tabindex="-1" aria-labelledby="viewLivestockModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewLivestockModalLabel">View Livestock Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Animal ID:</label>
+              <p id="view_animal_id"></p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Species:</label>
+              <p id="view_species"></p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Breed:</label>
+              <p id="view_breed"></p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Gender:</label>
+              <p id="view_gender"></p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Date of Birth:</label>
+              <p id="view_dob"></p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Weight (kg):</label>
+              <p id="view_weight"></p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Ear Tag:</label>
+              <p id="view_ear_tag"></p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Notes:</label>
+              <p id="view_notes"></p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Livestock Modal -->
+  <div class="modal fade" id="editLivestockModal" tabindex="-1" aria-labelledby="editLivestockModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editLivestockModalLabel">Edit Livestock</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editLivestockForm" method="post" action="">
+            <input type="hidden" name="edit_livestock" value="1">
+            <input type="hidden" name="animal_id" id="edit_livestock_animal_id">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Species</label>
+                <select class="form-select" name="species" id="edit_livestock_species" required>
+                  <option value="">Select Species</option>
+                  <option value="Cow">Cow</option>
+                  <option value="Goat">Goat</option>
+                  <option value="Sheep">Sheep</option>
+                  <option value="Pig">Pig</option>
+                  <option value="Chicken">Chicken</option>
+                  <option value="Duck">Duck</option>
+                  <option value="Turkey">Turkey</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Breed</label>
+                <input type="text" class="form-control" name="breed" id="edit_livestock_breed" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Gender</label>
+                <select class="form-select" name="gender" id="edit_livestock_gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" name="dob" id="edit_livestock_dob" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Weight (kg)</label>
+                <input type="number" step="0.01" class="form-control" name="weight" id="edit_livestock_weight" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Ear Tag</label>
+                <input type="text" class="form-control" name="ear_tag" id="edit_livestock_ear_tag" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label class="form-label">Notes</label>
+                <input type="text" class="form-control" name="notes" id="edit_livestock_notes">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update Livestock</button>
             </div>
           </form>
         </div>
@@ -1916,23 +2183,38 @@ if (isset($_POST['empsub1'])) {
   <script>
     // ... existing JavaScript ...
 
+    // Auto-generate ear tag if empty - starts with "LIV" followed by species prefix and timestamp
+    document.addEventListener('DOMContentLoaded', function() {
+      const earTagField = document.getElementById('admin_ear_tag');
+      if (earTagField) {
+        earTagField.addEventListener('blur', function() {
+          if (!this.value) {
+            const speciesSelect = document.querySelector('select[name="species"]');
+            const species = speciesSelect ? speciesSelect.value : '';
+            const timestamp = Date.now().toString().slice(-6);
+            const earTag = "LIV" + (species ? species.substring(0, 3).toUpperCase() : 'LIV') + timestamp;
+            this.value = earTag;
+          }
+        });
+      }
+    });
+
     // Form submission handlers
     document.getElementById('addLivestockForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const formData = new FormData(this);
+      
+      // Add the livestock_sub parameter to trigger PHP processing
+      formData.append('livestock_sub', '1');
 
-      fetch('add_livestock.php', {
+      // Submit the form to the same page
+      fetch(window.location.href, {
         method: 'POST',
         body: formData
       })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert('Livestock added successfully!');
-            location.reload();
-          } else {
-            alert('Error: ' + data.message);
-          }
+        .then(response => {
+          // Reload the page to show the result
+          location.reload();
         })
         .catch(error => {
           console.error('Error:', error);
@@ -2011,7 +2293,7 @@ if (isset($_POST['empsub1'])) {
 
     // Initialize all modals
     document.addEventListener('DOMContentLoaded', function () {
-      const modals = ['addLivestockModal', 'addMedicalModal', 'addProduceModal', 'addFeedingModal'];
+      const modals = ['addLivestockModal', 'addMedicalModal', 'addProduceModal', 'addFeedingModal', 'viewLivestockModal', 'editLivestockModal'];
       modals.forEach(modalId => {
         const modal = document.getElementById(modalId);
         if (modal) {
@@ -2089,6 +2371,26 @@ if (isset($_POST['empsub1'])) {
         .catch(error => {
           console.error('Error:', error);
           alert('An error occurred while updating the produce report.');
+        });
+    });
+
+    // Add event listener for edit livestock form submission
+    document.getElementById('editLivestockForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+
+      fetch(window.location.href, {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.text())
+        .then(data => {
+          // Reload the page to show updated data
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while updating the livestock record.');
         });
     });
 

@@ -8,36 +8,38 @@ use Dompdf\Options;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Function to log errors to a file
-function logError($message)
-{
-    $logDir = __DIR__ . '/../logs';
-    $logFile = $logDir . '/error.log';
+// Function to log errors to a file (only if not already defined)
+if (!function_exists('logError')) {
+    function logError($message)
+    {
+        $logDir = __DIR__ . '/../logs';
+        $logFile = $logDir . '/error.log';
 
-    // Create logs directory if it doesn't exist
-    if (!file_exists($logDir)) {
-        if (!@mkdir($logDir, 0755, true)) {
-            // If we can't create the directory, try to write to PHP's error log
-            error_log("Failed to create logs directory: " . $logDir);
+        // Create logs directory if it doesn't exist
+        if (!file_exists($logDir)) {
+            if (!@mkdir($logDir, 0755, true)) {
+                // If we can't create the directory, try to write to PHP's error log
+                error_log("Failed to create logs directory: " . $logDir);
+                error_log($message);
+                return;
+            }
+        }
+
+        // Check if directory is writable
+        if (!is_writable($logDir)) {
+            error_log("Logs directory is not writable: " . $logDir);
             error_log($message);
             return;
         }
-    }
 
-    // Check if directory is writable
-    if (!is_writable($logDir)) {
-        error_log("Logs directory is not writable: " . $logDir);
-        error_log($message);
-        return;
-    }
+        $timestamp = date('Y-m-d H:i:s');
+        $logMessage = "[$timestamp] $message\n";
 
-    $timestamp = date('Y-m-d H:i:s');
-    $logMessage = "[$timestamp] $message\n";
-
-    // Try to write to the log file
-    if (@file_put_contents($logFile, $logMessage, FILE_APPEND) === false) {
-        error_log("Failed to write to log file: " . $logFile);
-        error_log($message);
+        // Try to write to the log file
+        if (@file_put_contents($logFile, $logMessage, FILE_APPEND) === false) {
+            error_log("Failed to write to log file: " . $logFile);
+            error_log($message);
+        }
     }
 }
 
@@ -47,7 +49,7 @@ function getAdminEmail()
         $con = mysqli_connect("localhost", "root", "", "fms");
         if (!$con) {
             error_log("Database connection failed in getAdminEmail: " . mysqli_connect_error());
-            return 'admin@farm.com';
+            return 'ropykevin@gmail.com';
         }
 
         // Get admin email from contact table where name is 'Admin'
@@ -61,10 +63,10 @@ function getAdminEmail()
         }
 
         error_log("No admin email found in database, using fallback");
-        return 'admin@farm.com';
+        return 'ropykevin@gmail.com';
     } catch (Exception $e) {
         error_log("Error in getAdminEmail: " . $e->getMessage());
-        return 'admin@farm.com';
+        return 'ropykevin@gmail.com';
     }
 }
 
@@ -166,34 +168,42 @@ function sendReportNotification($reportType, $reportData)
             // Check if PHPMailer class exists
             if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
                 logError("PHPMailer class not found. Checking autoload...");
-                if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
-                    throw new Exception("Composer autoload file not found. Please run 'composer install'");
+                if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+                    logError("Composer autoload file not found. Skipping email sending.");
+                    return array(
+                        'success' => true,
+                        'message' => "Report generated successfully. Email sending skipped (autoload not found).",
+                        'report_data' => $reportData
+                    );
                 }
-                require_once __DIR__ . '/../vendor/autoload.php';
+                require_once __DIR__ . '/vendor/autoload.php';
                 if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
-                    throw new Exception("PHPMailer library not found. Please run 'composer require phpmailer/phpmailer'");
+                    logError("PHPMailer library not found. Skipping email sending.");
+                    return array(
+                        'success' => true,
+                        'message' => "Report generated successfully. Email sending skipped (PHPMailer not found).",
+                        'report_data' => $reportData
+                    );
                 }
             }
 
             $mail = new PHPMailer(true);
             logError("PHPMailer object created");
 
-            // Server settings
-            $mail->SMTPDebug = 2; // Enable verbose debug output
-            $mail->Debugoutput = function ($str, $level) {
-                logError("PHPMailer Debug: $str");
-            };
-
+            // Server settings - Using Gmail SMTP
+            $mail->SMTPDebug = 0; // Disable debug output to prevent hanging
             $mail->isSMTP();
-            $mail->Host = 'localhost';  // Use local Mercury Mail Server
-            $mail->Port = 25;           // Default SMTP port
-            $mail->SMTPAuth = false;    // No authentication for local server
-            $mail->SMTPAutoTLS = false; // Disable TLS for local server
+            $mail->Host = 'smtp.gmail.com';  // Gmail SMTP server
+            $mail->Port = 587;               // Gmail SMTP port
+            $mail->SMTPAuth = true;          // Enable authentication
+            $mail->SMTPSecure = 'tls';       // Enable TLS encryption
+            $mail->Username = 'farmmanagementsystem77@gmail.com'; // Replace with your Gmail
+            $mail->Password = 'rtcc brzp qwze rlli';    // Replace with your app password
 
             logError("SMTP settings configured");
 
             // Recipients
-            $mail->setFrom('noreply@farm.com', 'Farm Management System');
+            $mail->setFrom('farmmanagementsystem77@gmail.com', 'Farm Management System'); // Use your Gmail
             $mail->addAddress($to);
             logError("Recipients configured");
 
@@ -206,19 +216,28 @@ function sendReportNotification($reportType, $reportData)
 
             logError("Attempting to send email...");
             if (!$mail->send()) {
-                throw new Exception("Mailer Error: " . $mail->ErrorInfo);
+                logError("Email sending failed: " . $mail->ErrorInfo);
+                return array(
+                    'success' => true,
+                    'message' => "Report generated successfully. Email sending failed: " . $mail->ErrorInfo,
+                    'report_data' => $reportData
+                );
             }
             logError("Email sent successfully");
 
             return array(
                 'success' => true,
                 'message' => "Report has been sent successfully to {$to}",
-                'report_path' => null
+                'report_data' => $reportData
             );
         } catch (Exception $e) {
             logError("Email sending failed: " . $e->getMessage());
             logError("Stack trace: " . $e->getTraceAsString());
-            throw new Exception("Failed to send report email: " . $e->getMessage());
+            return array(
+                'success' => true,
+                'message' => "Report generated successfully. Email sending failed: " . $e->getMessage(),
+                'report_data' => $reportData
+            );
         }
     } catch (Exception $e) {
         logError("=== Report generation failed ===");

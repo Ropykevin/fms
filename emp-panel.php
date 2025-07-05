@@ -17,20 +17,30 @@ $emp = $_SESSION['empname'];
 
 /* 1. Livestock Entry */
 if (isset($_POST['livestock_sub'])) {
-    $species  = mysqli_real_escape_string($con, $_POST['species']);
-    $breed    = mysqli_real_escape_string($con, $_POST['breed']);
-    $gender   = mysqli_real_escape_string($con, $_POST['gender']);
-    $dob      = $_POST['dob'];
-    $weight   = $_POST['weight'];
-    $ear_tag  = mysqli_real_escape_string($con, $_POST['ear_tag']);
-    $notes    = mysqli_real_escape_string($con, $_POST['notes']);
+    $animal_id = mysqli_real_escape_string($con, $_POST['animal_id']);
+    $species   = mysqli_real_escape_string($con, $_POST['species']);
+    $breed     = mysqli_real_escape_string($con, $_POST['breed']);
+    $gender    = mysqli_real_escape_string($con, $_POST['gender']);
+    $dob       = $_POST['dob'];
+    $weight    = $_POST['weight'];
+    $ear_tag   = mysqli_real_escape_string($con, $_POST['ear_tag']);
+    $notes     = mysqli_real_escape_string($con, $_POST['notes']);
+    
+    // Always auto-generate animal_id
+    $timestamp = time();
+    $animal_id = strtoupper(substr($species, 0, 3)) . $timestamp;
+    
+    // Auto-generate ear_tag if empty - starts with "LIV" followed by animal_id
+    if (empty($ear_tag)) {
+        $ear_tag = "LIV" . $animal_id;
+    }
     
     // Validate weight is positive
     if ($weight > 0) {
-        $query = "INSERT INTO livestock (species, breed, gender, date_of_birth, weight, ear_tag, notes) 
-                  VALUES ('$species', '$breed', '$gender', '$dob', '$weight', '$ear_tag', '$notes')";
+        $query = "INSERT INTO livestock (animal_id, species, breed, gender, date_of_birth, weight, ear_tag, notes) 
+                  VALUES ('$animal_id', '$species', '$breed', '$gender', '$dob', '$weight', '$ear_tag', '$notes')";
         if (mysqli_query($con, $query)) {
-            echo "<script>alert('Livestock added successfully!');</script>";
+            echo "<script>alert('Livestock added successfully! Animal ID: $animal_id, Ear Tag: $ear_tag');</script>";
         } else {
             echo "<script>alert('Error adding livestock: " . mysqli_error($con) . "');</script>";
         }
@@ -368,20 +378,39 @@ if (isset($_POST['medical_sub'])) {
                     <!-- Data Entry Forms -->
                     <!-- 1. Add Livestock Form -->
                     <div class="tab-pane fade" id="list-settings" role="tabpanel">
-                        <form class="form-group" method="post" action="employee.php">
+                        <form class="form-group" method="post" action="">
                             <div class="row">
+                                <input type="hidden" name="animal_id" id="animal_id_field">
                                 <div class="col-md-4"><label>Species:</label></div>
-                                <div class="col-md-8"><input type="text" class="form-control" name="species" required></div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="species" required>
+                                        <option value="">Select Species</option>
+                                        <option value="Cow">Cow</option>
+                                        <option value="Goat">Goat</option>
+                                        <option value="Sheep">Sheep</option>
+                                        <option value="Pig">Pig</option>
+                                        <option value="Chicken">Chicken</option>
+                                        <option value="Duck">Duck</option>
+                                        <option value="Turkey">Turkey</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
                                 <div class="col-md-4"><label>Breed:</label></div>
-                                <div class="col-md-8"><input type="text" class="form-control" name="breed" required></div>
+                                <div class="col-md-8"><input type="text" class="form-control" name="breed" placeholder="e.g., Holstein, Nubian, etc." required></div>
                                 <div class="col-md-4"><label>Gender:</label></div>
-                                <div class="col-md-8"><input type="text" class="form-control" name="gender" required></div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
                                 <div class="col-md-4"><label>Date of Birth:</label></div>
                                 <div class="col-md-8"><input type="date" class="form-control" name="dob" required></div>
                                 <div class="col-md-4"><label>Weight (kg):</label></div>
                                 <div class="col-md-8"><input type="number" class="form-control" name="weight" required></div>
                                 <div class="col-md-4"><label>Ear Tag:</label></div>
-                                <div class="col-md-8"><input type="text" class="form-control" name="ear_tag" required></div>
+                                <div class="col-md-8"><input type="text" class="form-control" name="ear_tag" placeholder="Leave empty for auto-generation" id="ear_tag_field"></div>
                                 <div class="col-md-4"><label>Notes:</label></div>
                                 <div class="col-md-8"><input type="text" class="form-control" name="notes"></div>
                             </div>
@@ -391,7 +420,7 @@ if (isset($_POST['medical_sub'])) {
                     
                     <!-- 2. Delete Livestock Form -->
                     <div class="tab-pane fade" id="list-settings1" role="tabpanel">
-                        <form class="form-group" method="post" action="employee.php">
+                        <form class="form-group" method="post" action="">
                             <div class="row">
                                 <div class="col-md-4"><label>Ear Tag:</label></div>
                                 <div class="col-md-8"><input type="text" class="form-control" name="ear_tag" required></div>
@@ -402,10 +431,21 @@ if (isset($_POST['medical_sub'])) {
                     
                     <!-- 3. Add Feeding Record Form -->
                     <div class="tab-pane fade" id="list-feeding-record" role="tabpanel">
-                        <form class="form-group" method="post" action="employee.php">
+                        <form class="form-group" method="post" action="">
                             <div class="row">
-                                <div class="col-md-4"><label>Animal ID:</label></div>
-                                <div class="col-md-8"><input type="text" class="form-control" name="animal_id" required></div>
+                                <div class="col-md-4"><label>Animal:</label></div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="animal_id" required>
+                                        <option value="">Select Animal</option>
+                                        <?php 
+                                        $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
+                                        $result = mysqli_query($con, $query);
+                                        while($row = mysqli_fetch_array($result)){
+                                            echo "<option value='{$row['animal_id']}'>{$row['species']} - {$row['breed']} (ID: {$row['animal_id']}, Tag: {$row['ear_tag']})</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                                 <div class="col-md-4"><label>Feeding Date:</label></div>
                                 <div class="col-md-8"><input type="date" class="form-control" name="feeding_date" required></div>
                                 <div class="col-md-4"><label>Feed Type:</label></div>
@@ -421,10 +461,21 @@ if (isset($_POST['medical_sub'])) {
                     
                     <!-- 4. Add Medical Report Form -->
                     <div class="tab-pane fade" id="list-medical-record" role="tabpanel">
-                        <form class="form-group" method="post" action="employee.php">
+                        <form class="form-group" method="post" action="">
                             <div class="row">
-                                <div class="col-md-4"><label>Animal ID:</label></div>
-                                <div class="col-md-8"><input type="text" class="form-control" name="animal_id" required></div>
+                                <div class="col-md-4"><label>Animal:</label></div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="animal_id" required>
+                                        <option value="">Select Animal</option>
+                                        <?php 
+                                        $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
+                                        $result = mysqli_query($con, $query);
+                                        while($row = mysqli_fetch_array($result)){
+                                            echo "<option value='{$row['animal_id']}'>{$row['species']} - {$row['breed']} (ID: {$row['animal_id']}, Tag: {$row['ear_tag']})</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                                 <div class="col-md-4"><label>Report Date:</label></div>
                                 <div class="col-md-8"><input type="date" class="form-control" name="report_date" required></div>
                                 <div class="col-md-4"><label>Diagnosis:</label></div>
@@ -446,10 +497,21 @@ if (isset($_POST['medical_sub'])) {
                     
                     <!-- 5. Add Produce Record Form -->
                     <div class="tab-pane fade" id="list-produce-record" role="tabpanel">
-                        <form class="form-group" method="post" action="employee.php">
+                        <form class="form-group" method="post" action="">
                             <div class="row">
-                                <div class="col-md-4"><label>Animal ID:</label></div>
-                                <div class="col-md-8"><input type="text" class="form-control" name="animal_id" required></div>
+                                <div class="col-md-4"><label>Animal:</label></div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="animal_id" required>
+                                        <option value="">Select Animal</option>
+                                        <?php 
+                                        $query = "SELECT animal_id, species, breed, ear_tag FROM livestock ORDER BY species, breed";
+                                        $result = mysqli_query($con, $query);
+                                        while($row = mysqli_fetch_array($result)){
+                                            echo "<option value='{$row['animal_id']}'>{$row['species']} - {$row['breed']} (ID: {$row['animal_id']}, Tag: {$row['ear_tag']})</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                                 <div class="col-md-4"><label>Report Date:</label></div>
                                 <div class="col-md-8"><input type="date" class="form-control" name="report_date" required></div>
                                 <div class="col-md-4"><label>Produce Type:</label></div>
@@ -481,5 +543,78 @@ if (isset($_POST['medical_sub'])) {
             integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" 
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.all.min.js"></script>
+    
+    <script>
+        // Form validation and enhancement
+        $(document).ready(function() {
+            // Set default date to today for date inputs
+            $('input[type="date"]').each(function() {
+                if (!$(this).val()) {
+                    $(this).val(new Date().toISOString().split('T')[0]);
+                }
+            });
+            
+            // Validate weight input
+            $('input[name="weight"]').on('input', function() {
+                var weight = parseFloat($(this).val());
+                if (weight <= 0) {
+                    $(this).addClass('is-invalid');
+                    $(this).next('.invalid-feedback').remove();
+                    $(this).after('<div class="invalid-feedback">Weight must be positive</div>');
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $(this).next('.invalid-feedback').remove();
+                }
+            });
+            
+            // Validate quantity inputs
+            $('input[name="quantity"]').on('input', function() {
+                var quantity = parseFloat($(this).val());
+                if (quantity <= 0) {
+                    $(this).addClass('is-invalid');
+                    $(this).next('.invalid-feedback').remove();
+                    $(this).after('<div class="invalid-feedback">Quantity must be positive</div>');
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $(this).next('.invalid-feedback').remove();
+                }
+            });
+            
+            // Validate cost input
+            $('input[name="cost"]').on('input', function() {
+                var cost = parseFloat($(this).val());
+                if (cost < 0) {
+                    $(this).addClass('is-invalid');
+                    $(this).next('.invalid-feedback').remove();
+                    $(this).after('<div class="invalid-feedback">Cost must be non-negative</div>');
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $(this).next('.invalid-feedback').remove();
+                }
+            });
+            
+
+            
+            // Auto-generate ear tag if empty - starts with "LIV" followed by species prefix and timestamp
+            $('input[name="ear_tag"]').on('blur', function() {
+                if (!$(this).val()) {
+                    var species = $('select[name="species"]').val();
+                    var timestamp = Date.now().toString().slice(-6);
+                    var earTag = "LIV" + (species ? species.substring(0, 3).toUpperCase() : 'LIV') + timestamp;
+                    $(this).val(earTag);
+                }
+            });
+            
+            // Show success messages with SweetAlert
+            <?php if(isset($_POST['livestock_sub']) || isset($_POST['feeding_sub']) || isset($_POST['medical_sub']) || isset($_POST['produce_sub'])): ?>
+            Swal.fire({
+                title: 'Success!',
+                text: 'Data has been added successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            <?php endif; ?>
+        });
+    </script>
 </body>
 </html>
